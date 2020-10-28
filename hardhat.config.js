@@ -1,16 +1,20 @@
 require("@nomiclabs/hardhat-waffle");
+const hdnode = require('@ethersproject/hdnode');
 
-// The next line is part of the sample project, you don't need it in your
-// project. It imports a Hardhat task definition, that can be used for
-// testing the frontend.
-require("./tasks/faucet");
+let mnemonic = process.env.MNEMONIC;
+if (typeof mnemonic === 'undefined')
+  mnemonic = 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about';
 
 module.exports = {
   solidity: "0.7.3",
   networks: {
     hardhat: {
       accounts: {
-        mnemonic: process.env.MNEMONIC
+        mnemonic,
+        path: hdnode.defaultPath,
+        count: 5,
+        gasPrice: 0,
+        gasLimit: 0x1fffffffffffff,
       }
     }
   }
